@@ -1,17 +1,17 @@
 def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCode, shipping_category):
     
     driver = get_chrome_driver()
-    if ShippingSupplier == 'Burd':
+    if ShippingSupplier == '':
         logging.info('Extracting Tracking History from the website of Burd')
-        driver.get(f"https://burd.dk/pages/track-and-trace?q={TrackTraceNumber}")
+        driver.get(f"")
         wait = WebDriverWait(driver, 10)
         tracking_status = wait.until(EC.presence_of_element_located((By.ID, 'orderStatus'))).text
         latest_timestamp = " ".join(tracking_status.split("\n")[0].split()[:2]).replace(" kl.", "")
         latest_tracking_date = datetime.strptime(latest_timestamp, "%d/%m/%Y")
 
-    elif ShippingSupplier == 'DAO':
+    elif ShippingSupplier == '':
         logging.info('Extracting Tracking History from the website of DAO')
-        driver.get(f"https://dao.as/find-din-pakke/?stregkode={TrackTraceNumber}")
+        driver.get(f"")
         wait = WebDriverWait(driver, 10)
         tracking_status = ""
 
@@ -62,8 +62,8 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
         else:
             pass
 
-    elif ShippingSupplier == 'PostNord':
-        logging.info('Extracting Tracking History from the website of PostNord')
+    elif ShippingSupplier == '':
+        logging.info('')
         driver.get(f"https://tracking.postnord.com/en/?id={TrackTraceNumber}")
         wait = WebDriverWait(driver, 10)
         cookie_accept_button = wait.until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler")))
@@ -111,9 +111,9 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
             latest_date = datetime.strptime(latest_time, "%d %b, %H:%M")
             latest_tracking_date = latest_date.replace(year=now.year)
 
-    elif ShippingSupplier == 'GLS' or ShippingName == 'Matas - Matas butik' or ShippingSupplier == 'Matas':
+    elif ShippingSupplier == '' or ShippingName == '' or ShippingSupplier == '':
         logging.info('Extracting Tracking History from the website of GLS')
-        driver.get(f"https://gls-group.eu/DK/da/find-pakke?match={TrackTraceNumber}&txtAction=71000")
+        driver.get(f"")
         wait = WebDriverWait(driver, 10)
         cookie_button = wait.until(EC.element_to_be_clickable((By.ID, 's-all-bn')))
         cookie_button.click()
@@ -137,9 +137,9 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
         latest_timestamp = formatted_status_history[0].split("\n")[0]
         latest_tracking_date = datetime.strptime(latest_timestamp.split(' ')[0], "%d.%m.%Y")
 
-    elif ShippingSupplier == 'Instabox':
+    elif ShippingSupplier == '':
         logging.info('Extracting Tracking History from the website of Instabox')
-        driver.get(f"https://track.instabox.io/sv-SE/{TrackTraceNumber}?c={ZipCode}")
+        driver.get(f"")
 
         wait = WebDriverWait(driver, 7)
 
