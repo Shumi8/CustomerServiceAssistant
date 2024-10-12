@@ -1,66 +1,97 @@
-# CustomerServiceAssistant
+# Customer Assistant Agent for Large Retail Organization
 
-This code represents a sophisticated customer service agent developed for one of the largest retail organizations in Denmark, designed to handle more than 350 queries daily via the Zendesk platform. It integrates Azure Functions, containerization via Docker, OpenAI's large language models (LLMs), and Zendesk API, with the automation being deployed and managed using Azure Logic Apps. Here’s a detailed breakdown of the functionality, technologies, and models used in the code.
+This repository contains the code for an automated customer service agent developed for one of Denmark’s largest retail organizations. This assistant handles more than 350 queries daily using Azure Functions, OpenAI's GPT models, and Zendesk APIs. It is designed to address a wide range of customer queries related to orders, tracking, returns, and more.
 
-Core Functionalities:
-Query Categorization and Response Generation: The core functionality of this code is to process customer queries in both Danish and English by using OpenAI GPT-based models to generate responses based on the category of the user query. The code categorizes queries into several types:
+## Features
 
-After Purchase Issues: Handles complaints about received orders (e.g., missing items, wrong or broken products, returns).
-Before Purchase Issues: Handles pre-purchase inquiries such as availability and product recommendations.
-Order Status/Tracking: Determines the current status of an order using order numbers and the tracking history.
-Returns and Claims (Claimlane): Specialized for handling return requests, defective products, missing parts, damaged goods, lost deliveries, and allergic reactions.
-Order Tracking: For queries regarding order status, the function extracts the order number from user queries, retrieves details via API from an order administration system, and checks the shipping status using the carrier’s website. Selenium WebDriver is used to automate tracking history extraction from shipping providers like Burd, DAO, PostNord, and GLS.
+- **Handles Over 350 Queries Daily**: Automates responses to frequent customer inquiries, improving response times and accuracy.
+- **Order Tracking**: Uses Selenium to fetch real-time tracking information from logistics providers and provide updates on order status.
+- **Order Issues Resolution**: Handles cases where customers receive the wrong or broken items and generates appropriate responses, including image comparison using OpenAI Vision API.
+- **Claimlane Integration**: Automatically generates responses for returns, defective items, missing parts, and allergic reactions using Claimlane.
+- **Multilingual Support**: Supports Danish and English queries, dynamically responding in the same language as the user's query.
+- **Macro-based Responses**: Uses pre-defined macros to ensure consistent, high-quality responses for various customer scenarios.
+- **Scalable and Serverless**: Deployed as an Azure Function and containerized using Docker for easy scaling and portability.
+- **Zendesk Integration**: Fully integrated with Zendesk API to retrieve customer queries and submit responses.
 
-Response Customization and Templates: The code utilizes multiple response macros (predefined templates) for both After Purchase and Before Purchase scenarios, allowing for consistent and fast responses tailored to customer queries. Depending on the type of query, the macros are integrated into the response.
+## Technologies Used
 
-Handling Vision Tasks with OpenAI Vision API: The agent handles more complex queries involving images using OpenAI's Vision API. When a customer sends images, such as those showing a wrong or broken item, the Vision API compares them with product images from the retailer’s database. For example:
+### 1. **OpenAI GPT-4 (Vision-enabled)**
+- **LLM for Text**: GPT-4 models generate dynamic responses based on the customer query. The system intelligently categorizes and responds to various types of customer queries.
+- **Vision API**: For queries involving image attachments, GPT-4 Vision API is used to analyze and compare product images provided by the customer with the retailer’s product database (e.g., wrong item or broken product).
 
-Wrong Item Received: Compares product images the customer received vs. what they ordered.
-Broken Item Received: Analyzes images for defects (e.g., broken packaging, product cracks).
-Claimlane Integration: If a query is identified as falling under Claimlane categories (Return, Defective Item, Missing Parts, etc.), the code generates a specific response instructing the customer to submit a claim via the provided Claimlane link. Claimlane handles customer claims and returns efficiently by collecting the necessary details.
+### 2. **Selenium for Web Scraping**
+- Selenium WebDriver is used to extract order tracking information from third-party logistics providers' websites, such as **Burd**, **DAO**, **PostNord**, and **GLS**. This allows the agent to provide real-time updates on the status of a package, even when a carrier API is unavailable.
 
-API and Web Scraping with Selenium: The code uses the Selenium WebDriver to interact with carrier tracking pages to extract tracking history and status for packages. This automates the tracking process without relying on direct API access from all the courier services.
+### 3. **Zendesk API**
+- The system retrieves customer queries from Zendesk tickets using the Zendesk API. It also submits the generated responses back to Zendesk, ensuring a seamless integration with the support team’s workflow.
 
-Automated Categorization and Function Invocation: The OpenAI model is used to intelligently classify queries into categories such as "Where is My Package?", "Wrong Item Received", or "Missing Item", and calls the appropriate function to generate a response based on the category.
+### 4. **Azure Function App**
+- The application is deployed as an **Azure Function** which is triggered whenever a customer query is received. The serverless architecture of Azure Functions allows the system to scale automatically based on query volume.
 
-Azure Function App: The core of the system runs as an Azure Function which is exposed via an HTTP endpoint. When a query is received from Zendesk, Azure Logic Apps trigger the function by calling this HTTP endpoint. The function processes the query, interacts with external APIs, generates a response, and sends it back to Zendesk.
+### 5. **Docker Containerization**
+- The entire function is containerized using **Docker** to ensure consistency across different environments (development, testing, production). This ensures that all necessary dependencies such as **Selenium** and **Chrome WebDriver** are packaged together and easily deployable.
 
-Technologies Used:
-OpenAI GPT Models:
+### 6. **Azure Logic Apps**
+- **Azure Logic Apps** automate the process by triggering the Azure Function whenever a new Zendesk query is received. It orchestrates the workflow, ensuring smooth automation and integration with the Zendesk ticketing system.
 
-The system utilizes GPT-4 (Vision-enabled) for text-based responses and image-based query handling. GPT-4 processes both customer queries and generates responses, and in the case of image-based queries, the Vision API analyzes the images sent by users.
-OpenAI Azure Integration: OpenAI’s API is configured with Azure's service to integrate with the function app, making it a scalable solution.
-Selenium:
+### 7. **Claimlane Integration**
+- The agent handles return requests and defective product claims through **Claimlane**, a third-party platform that simplifies the returns process. Customers receive Claimlane links to submit their return or claim requests.
 
-Selenium is used for web scraping to fetch real-time tracking information from third-party logistics providers' websites like DAO, Burd, PostNord, and GLS. Since not all carriers provide tracking APIs, Selenium automates browser interaction to extract tracking statuses.
-Azure Functions and Docker:
+## Query Types Handled
 
-The code is hosted within an Azure Function App, which provides serverless hosting and scales based on demand. The function is containerized using Docker, which allows for easy deployment, scaling, and isolation of the app's environment.
-Docker ensures that the environment dependencies (Selenium, Chrome WebDriver, OpenAI, etc.) are consistently maintained across all deployments. The Azure Function App is integrated with the Docker image, making it portable and easily managed.
-Zendesk API:
+### 1. **Order Tracking**
+   - Provides updates on order status, package location, and estimated delivery times.
+   
+### 2. **Order Cancellation**
+   - Handles requests to cancel an order based on its current status.
 
-Zendesk API is used to interact with the ticketing system. The code uses it to retrieve user queries and ticket data (such as order numbers or images) and to send generated responses back to customers.
-Azure Logic Apps:
+### 3. **Wrong Item or Broken Product**
+   - Automatically analyzes images sent by the customer and compares them with the retailer's product images using the Vision API. Generates appropriate responses based on the results.
 
-Azure Logic Apps act as the orchestrator, triggering the Azure Function whenever a new customer query is received. This enables automation without manual intervention.
-Tracking History Parsing: The function also includes logic for month mapping between Danish and English, which allows it to convert tracking details into a customer-friendly format, supporting both Danish and English languages.
+### 4. **Missing Items**
+   - Investigates missing items in the customer's order by reviewing the order details and tracking history.
 
-User Query Types Handled:
-Order Tracking: Customers asking "Where is my package?"
-Order Cancellation: Handling requests to cancel an order.
-Address Changes: Address modification requests post-order.
-Wrong Item Received: Comparing images and generating solutions.
-Broken/Damaged Products: Handling issues with defective products.
-Missing Items: Investigating missing products from an order.
-Pre-Purchase Queries: Responding to product availability or recommendations.
-Returns and Claims: Initiating the return process using Claimlane.
-Model Integration:
-LLM (GPT-4): The core language model used for generating responses based on user input.
-Vision-enabled GPT-4: Utilized to analyze and compare images (product photos) and provide visual-based analysis for issues like wrong or damaged products.
-Containerization with Docker:
-The function app is containerized using Docker, ensuring consistency between development, testing, and production environments. The container includes all dependencies such as the Chrome WebDriver (for Selenium) and the OpenAI SDK, making the function highly portable and scalable.
+### 5. **Returns and Claims (Claimlane)**
+   - Guides customers through the return process or defective item claims via Claimlane.
 
-Docker also allows easy scaling on Azure and supports rapid deployment of updates or patches by simply updating the Docker image.
+### 6. **Pre-Purchase Inquiries**
+   - Responds to customer questions regarding product availability and recommendations before making a purchase.
 
-Conclusion:
-This system automates customer service for a large retail organization, handling various user queries with the help of GPT-4 models, Zendesk API, Selenium for tracking, and Azure for deployment. It provides a robust, scalable solution for managing high volumes of customer interactions efficiently and accurately, using machine learning models, web scraping, and API integrations. The use of Docker ensures environment consistency, while Azure Functions allows for serverless, scalable deployment.
+### 7. **Change of Address**
+   - Assists customers who want to update the shipping address for their order.
+
+## Deployment Steps
+
+### 1. **Set up Azure Function App**
+   - The core of the system runs as an Azure Function. This serverless architecture ensures that the function scales automatically based on incoming traffic.
+
+### 2. **Containerize with Docker**
+   - The entire app is packaged into a **Docker container**, which includes all necessary dependencies such as Selenium, Chrome WebDriver, and the OpenAI API SDK. This ensures that the function can be easily deployed in any environment with consistent results.
+
+### 3. **Connect to Zendesk API**
+   - The function connects to Zendesk to retrieve customer queries and submit responses. Ensure that the **Zendesk API** keys are set up properly in your environment configuration.
+
+### 4. **Configure Azure Logic Apps**
+   - Use **Azure Logic Apps** to automate the flow of customer queries to the function app. Whenever a new query is received in Zendesk, the Logic App triggers the Azure Function to process the query and generate a response.
+
+### 5. **OpenAI API Integration**
+   - The function is integrated with **OpenAI's API** to generate responses for customer queries and handle image-based tasks. The OpenAI credentials should be set up using the Azure environment variables.
+
+### 6. **Selenium for Web Scraping**
+   - Selenium is set up in the Docker container to fetch order tracking data from third-party courier websites when direct API access is not available.
+
+## Example Workflow
+
+1. A customer submits a query to Zendesk (e.g., "Where is my package?").
+2. Azure Logic App triggers the Azure Function, which retrieves the query using Zendesk API.
+3. The function identifies the query category (e.g., tracking request, missing item, or wrong product).
+4. Depending on the category:
+   - For order tracking, it uses Selenium to fetch real-time tracking details from the logistics provider.
+   - For product issues, it uses OpenAI's Vision API to analyze customer-uploaded images.
+   - For claims or returns, it sends a Claimlane link for the customer to follow up.
+5. A response is generated, incorporating pre-defined macros (templates) or dynamically based on query details.
+6. The response is sent back to Zendesk, where it is delivered to the customer.
+
+## Conclusion
+
+This customer assistant agent automates customer service for a large retail organization, handling various user queries efficiently and accurately. With the integration of machine learning models (GPT-4), web scraping (Selenium), and Claimlane, it provides a comprehensive solution for managing customer interactions and improving overall response time and satisfaction.
