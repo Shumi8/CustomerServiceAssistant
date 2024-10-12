@@ -27,7 +27,7 @@ def get_customer_assistant_response(req: func.HttpRequest) -> func.HttpResponse:
         "Authorization": ''
         }
 
-        ticket_url = f"https://matas.zendesk.com/api/v2/tickets/{ticket_id}.json"
+        ticket_url = f"https://zendesk_api/api/v2/tickets/{ticket_id}.json"
         response = requests.get(ticket_url, headers=headers)
         
         if response.status_code == 200:
