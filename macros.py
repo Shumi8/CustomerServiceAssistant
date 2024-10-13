@@ -16,7 +16,7 @@ def get_after_purchase_macros_response(prompt):
     
     Your task is to determine the correct Macro for the users query and respond by following the process as outlined in the examples below:
     
-    Q: Hej, Jeg lagde mærke til, at Tanning Spray ikke var inkluderet i min seneste ordre. Hvad sker der, og hvordan kan dette løses?: Decision: Send ny ordre
+    Q: Removed due to organization's policy.
     A: Let's solve this step by step:
     Step 1: Utilize the 'intro' macro: 
     {intro_macros} 
@@ -128,7 +128,7 @@ def get_before_purchase_macros_response(prompt):
     
     Your task is to determine the correct Macro for the users query and respond by following the process as outlined in the examples below:
     
-    Q: Hej, Jeg forsøgte at købe Paco Rabanne produktet, men det ser ud til at være udsolgt. Hvad kan jeg gøre for at få det, og ved du, hvornår det vil være tilgængeligt igen?: Decision: Tilmeld dig, så du får besked, når varen er på lager igen.
+    Q: Removed due to organization's policy.
     A: Let's solve this step by step:
     Step 1: Utilize the 'intro' macro: 
     {intro_macros} 
