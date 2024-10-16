@@ -1,6 +1,6 @@
-# Customer Assistant Agent for Denmark's Largest Retail Organization
+# Customer Assistant Agent for a Retail Organization
 
-This repository contains the code for an automated customer service agent developed for one of Denmark’s largest retail organizations. This assistant handles more than 350 queries daily using Azure Functions, OpenAI's GPT models, and Zendesk APIs. It is designed to address a wide range of customer queries related to orders, tracking, returns, and more.
+This repository contains the code for an automated customer service agent developed for a retail organizations. This assistant handles more than 350 queries daily using Azure Functions, OpenAI's GPT models, and Zendesk APIs. It is designed to address a wide range of customer queries related to orders, tracking, returns, and more.
 
 ## Features
 
