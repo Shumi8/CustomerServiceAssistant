@@ -8,10 +8,9 @@ logging.basicConfig(level=logging.INFO)
 # Function to fetch order details using external API
 def get_order_admin_details(params):
     current_datetime_utc = datetime.utcnow()
-    formatted_datetime = current_datetime_utc.strftime('%Y%m%d%H%M%S')
 
-    hash_input = (formatted_datetime + 'SECRET_KEY').encode('utf-8')
-    sha = hashlib.sha256()
+    hash_input = ''
+    sha = ''
     sha.update(hash_input)
     security_key = sha.hexdigest()
 
