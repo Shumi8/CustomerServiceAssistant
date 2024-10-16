@@ -6,8 +6,8 @@ from macros import get_after_purchase_macros_response, get_before_purchase_macro
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
-@app.route(route="get_customer_assistant_response")
-def get_customer_assistant_response(req: func.HttpRequest) -> func.HttpResponse:
+@app.route(route="get_agent_response")
+def get_agnet_response(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     ticket_id = req.params.get('ticket_id')
     user_email = req.params.get('user_email')
