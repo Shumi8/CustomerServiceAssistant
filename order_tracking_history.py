@@ -64,7 +64,7 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
 
     elif ShippingSupplier == '':
         logging.info('')
-        driver.get(f"https://tracking.postnord.com/en/?id={TrackTraceNumber}")
+        driver.get(f"")
         wait = WebDriverWait(driver, 10)
         cookie_accept_button = wait.until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler")))
         cookie_accept_button.click()
