@@ -32,7 +32,7 @@ def get_order_admin_details(params):
 
 
 # Function to get products, sum, and images from the API
-def get_products_sum_and_matas_image(order_number, email):
+def get_products_sum_and_image(order_number, email):
     logging.info('Getting Products Sum and Images')
 
     current_datetime_utc = datetime.utcnow()
