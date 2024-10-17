@@ -17,7 +17,7 @@ def get_order_admin_details(params):
     app_id = "YOUR_APP_ID"
     base_url = "YOUR_API_BASE_URL"
 
-    url = f"{base_url}/v2/order/detailed"
+    url = f""
     headers = {
         "appId": app_id,
         "timestamp": formatted_datetime,
@@ -46,7 +46,7 @@ def get_products_sum_and_matas_image(order_number, email):
     app_id = "YOUR_APP_ID"
     base_url = "YOUR_API_BASE_URL"
 
-    url = f"{base_url}/v2/order/products"
+    url = f""
     headers = {
         "appId": app_id,
         "timestamp": formatted_datetime,
