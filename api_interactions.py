@@ -80,7 +80,7 @@ def get_image_from_user(ticket_id):
         "Authorization": 'YOUR_API_KEY'
     }
 
-    url = f"https://YOUR_ZENDESK_API.com/api/v2/tickets/{ticket_id}/comments.json"
+    url = f""
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
