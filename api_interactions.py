@@ -38,8 +38,8 @@ def get_products_sum_and_image(order_number, email):
     current_datetime_utc = datetime.utcnow()
     formatted_datetime = current_datetime_utc.strftime('%Y%m%d%H%M%S')
 
-    hash_input = (formatted_datetime + 'SECRET_KEY').encode('utf-8')
-    sha = hashlib.sha256()
+   hash_input = ''
+    sha = ''
     sha.update(hash_input)
     security_key = sha.hexdigest()
 
