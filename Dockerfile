@@ -51,6 +51,6 @@ RUN pip install -r /requirements.txt
  
 COPY . .
 
-EXPOSE 7072
+EXPOSE xxxx
 
-CMD func host start --port 7072
+CMD func host start --port xxxx
