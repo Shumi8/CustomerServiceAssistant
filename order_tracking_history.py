@@ -2,7 +2,7 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
     
     driver = get_chrome_driver()
     if ShippingSupplier == '':
-        logging.info('Extracting Tracking History from the website of Burd')
+        logging.info('Extracting Tracking History from the website of xxxx')
         driver.get(f"")
         wait = WebDriverWait(driver, 10)
         tracking_status = wait.until(EC.presence_of_element_located((By.ID, 'orderStatus'))).text
@@ -10,7 +10,7 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
         latest_tracking_date = datetime.strptime(latest_timestamp, "%d/%m/%Y")
 
     elif ShippingSupplier == '':
-        logging.info('Extracting Tracking History from the website of DAO')
+        logging.info('Extracting Tracking History from the website of xxxx')
         driver.get(f"")
         wait = WebDriverWait(driver, 10)
         tracking_status = ""
@@ -81,12 +81,12 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
         configure_shadow_root = wait.until(lambda driver: driver.execute_script(
             'return arguments[0].shadowRoot.querySelector("main > div > div > div > div > div.delivery-route")',
             locate_root_element))
-        postnord_status_tracking_history = wait.until(
+        xxxx_status_tracking_history = wait.until(
             lambda driver: driver.execute_script("return arguments[0].textContent;", configure_shadow_root))
-        postnord_status_tracking_history = postnord_status_tracking_history.replace("Delivery Route", "").replace(
+        xxxx_status_tracking_history = xxxx_status_tracking_history.replace("Delivery Route", "").replace(
             "View less", "")
-        postnord_status_tracking_history = postnord_status_tracking_history.replace("DK", "DK ")
-        tracking_status = postnord_status_tracking_history.replace(".", ".\n")
+        xxxx_status_tracking_history = xxxx_status_tracking_history.replace("DK", "DK ")
+        tracking_status = xxxx_status_tracking_history.replace(".", ".\n")
         latest_time_shadow_root = wait.until(lambda driver: driver.execute_script(
             'return arguments[0].shadowRoot.querySelector("main > div > div > div > div > div.delivery-route > div > ul > li:nth-child(1) > div > div > p")',
             locate_root_element))
@@ -138,7 +138,7 @@ def get_tracking_history(TrackTraceNumber, ShippingSupplier, ShippingName, ZipCo
         latest_tracking_date = datetime.strptime(latest_timestamp.split(' ')[0], "%d.%m.%Y")
 
     elif ShippingSupplier == '':
-        logging.info('Extracting Tracking History from the website of Instabox')
+        logging.info('Extracting Tracking History from the website of xxxx')
         driver.get(f"")
 
         wait = WebDriverWait(driver, 7)
