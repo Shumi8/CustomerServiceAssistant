@@ -13,7 +13,7 @@ RUN apt-get update && \
   apt install -y lsb-release && \
   curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
   mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-  echo "deb [arch=amd64] https://packages.microsoft.com/debian/$(lsb_release -rs | cut -d'.' -f 1)/prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list && \
+  echo "" \
   apt-get update && \
   apt-get install -y azure-functions-core-tools-4
 
@@ -30,7 +30,7 @@ RUN apt-get update \
 
 # Install a specific version of Chrome - v114.0.5735.198-1 in this case.
 RUN CHROME_VERSION=114.0.5735.198-1 && \
-    wget --no-check-certificate https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb && \
+    wget --no-check-certificate xxxx && \
     dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb; apt update; apt install -y -f; apt install -y xvfb;
 
 # Install specific versions of the Chrome driver corresponding to the chrome version installed above
